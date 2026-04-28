@@ -27,48 +27,39 @@ Supported bitrates: `96`, `128`, `192`, `256`, `320` kbps.
 
 ## Configuration
 
-- `PORT` — port to listen on for `npm start` (default `3000`).
+- `PORT` — port to listen on (default `3000`). Render sets this
+  automatically.
 
 ## Project layout
 
 ```
 api/
-  info.js          /api/info handler (also used by Vercel)
-  convert.js       /api/convert handler (also used by Vercel)
+  info.js          /api/info handler
+  convert.js       /api/convert handler
 lib/
   util.js          Shared helpers
 public/
   index.html       UI
   styles.css       Styles
   app.js           Front-end logic
-server.js          Express wrapper for self-hosting
-vercel.json        Vercel function config
+server.js          Express entrypoint
+render.yaml        Render Blueprint config
 ```
 
-## Deploying to Vercel
+## Deploying to Render
 
-1. Push this repo to GitHub (already done if you're reading this on GitHub).
-2. Go to <https://vercel.com/new> and import the repository.
-3. Accept the defaults and click **Deploy**. The handlers in `api/` are
-   picked up automatically; `public/` is served as static files.
+This repo includes a `render.yaml` Blueprint, so deploying is one click:
 
-### Vercel limits to be aware of
+1. Push to GitHub (already done if you're reading this on GitHub).
+2. Go to <https://dashboard.render.com/select-repo?type=blueprint>.
+3. Pick the `y2m` repository. Render reads `render.yaml` and proposes a
+   free-tier web service. Click **Apply**.
+4. Wait ~2 minutes for the first build. Render gives you a URL like
+   `https://y2m.onrender.com`.
 
-This app is a tight fit for Vercel — it works for short clips but has
-real constraints:
-
-- **Function timeout.** Hobby = 10s, Pro = 60s default (raised to 300s by
-  `vercel.json`). Long videos will time out before transcoding finishes.
-- **Function size.** `ffmpeg-static` ships an ~78 MB binary. Hobby caps
-  bundled functions at 50 MB compressed; Pro at 250 MB. Hobby may fail to
-  deploy.
-- **No background work.** Each request must complete in one synchronous
-  function invocation.
-
-If you hit these, **Render** or **Fly.io** are much better fits — they
-run the Express server as a long-lived process with no time/size caps.
-The `server.js` entrypoint and `npm start` script already work on both
-without changes.
+The free tier sleeps after 15 minutes of inactivity and takes a few
+seconds to wake on the next request. Upgrade to the Starter plan ($7/mo)
+to keep it always-on.
 
 ## Notice
 
