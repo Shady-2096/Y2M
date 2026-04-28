@@ -1,4 +1,5 @@
 import ytdl from '@distube/ytdl-core';
+import { getYtdlOptions } from '../lib/agent.js';
 
 export default async function handler(req, res) {
   const { url } = req.query;
@@ -6,7 +7,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid YouTube URL' });
   }
   try {
-    const { videoDetails } = await ytdl.getInfo(url);
+    const { videoDetails } = await ytdl.getInfo(url, getYtdlOptions());
     res.json({
       title: videoDetails.title,
       author: videoDetails.author?.name ?? null,

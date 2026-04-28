@@ -2,6 +2,7 @@ import ytdl from '@distube/ytdl-core';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegStatic from 'ffmpeg-static';
 import { VALID_BITRATES, sanitizeFilename } from '../lib/util.js';
+import { getYtdlOptions } from '../lib/agent.js';
 
 ffmpeg.setFfmpegPath(ffmpegStatic);
 
@@ -16,9 +17,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Unsupported bitrate' });
   }
 
+  const ytdlOptions = getYtdlOptions();
+
   let info;
   try {
-    info = await ytdl.getInfo(url);
+    info = await ytdl.getInfo(url, ytdlOptions);
   } catch (err) {
     console.error('getInfo failed:', err);
     return res
@@ -36,6 +39,7 @@ export default async function handler(req, res) {
   const audioStream = ytdl.downloadFromInfo(info, {
     quality: 'highestaudio',
     filter: 'audioonly',
+    ...ytdlOptions,
   });
 
   audioStream.on('error', (err) => {
