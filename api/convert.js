@@ -20,8 +20,10 @@ export default async function handler(req, res) {
   try {
     info = await ytdl.getInfo(url);
   } catch (err) {
-    console.error('getInfo failed:', err.message);
-    return res.status(500).json({ error: 'Failed to load video' });
+    console.error('getInfo failed:', err);
+    return res
+      .status(500)
+      .json({ error: `Failed to load video: ${err.message}` });
   }
 
   const filename = `${sanitizeFilename(info.videoDetails.title)}.mp3`;

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       videoId: videoDetails.videoId,
     });
   } catch (err) {
-    console.error('info error:', err.message);
-    res.status(500).json({ error: 'Failed to fetch video info' });
+    console.error('info error:', err);
+    res.status(500).json({ error: `Failed to fetch video info: ${err.message}` });
   }
 }
