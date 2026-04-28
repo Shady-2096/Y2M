@@ -4,7 +4,7 @@ A small, self-hosted web app that converts a YouTube video to an MP3 file.
 Built with Node.js, Express, `@distube/ytdl-core`, and a bundled
 `ffmpeg-static` binary so there are no system dependencies to install.
 
-## Quick start
+## Quick start (local)
 
 ```bash
 npm install
@@ -27,16 +27,39 @@ Supported bitrates: `96`, `128`, `192`, `256`, `320` kbps.
 
 ## Configuration
 
-- `PORT` — port to listen on (default `3000`).
+- `PORT` — port to listen on (default `3000`). Render sets this
+  automatically.
 
 ## Project layout
 
 ```
-server.js          Express server + conversion pipeline
-public/index.html  UI
-public/styles.css  Styles
-public/app.js      Front-end logic
+api/
+  info.js          /api/info handler
+  convert.js       /api/convert handler
+lib/
+  util.js          Shared helpers
+public/
+  index.html       UI
+  styles.css       Styles
+  app.js           Front-end logic
+server.js          Express entrypoint
+render.yaml        Render Blueprint config
 ```
+
+## Deploying to Render
+
+This repo includes a `render.yaml` Blueprint, so deploying is one click:
+
+1. Push to GitHub (already done if you're reading this on GitHub).
+2. Go to <https://dashboard.render.com/select-repo?type=blueprint>.
+3. Pick the `y2m` repository. Render reads `render.yaml` and proposes a
+   free-tier web service. Click **Apply**.
+4. Wait ~2 minutes for the first build. Render gives you a URL like
+   `https://y2m.onrender.com`.
+
+The free tier sleeps after 15 minutes of inactivity and takes a few
+seconds to wake on the next request. Upgrade to the Starter plan ($7/mo)
+to keep it always-on.
 
 ## Notice
 
