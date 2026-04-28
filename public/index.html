@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>y2m — YouTube to MP3</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>y2m</h1>
+        <p class="tagline">Paste a YouTube link, get an MP3.</p>
+      </header>
+
+      <form id="form" class="card" autocomplete="off">
+        <label for="url">YouTube URL</label>
+        <input
+          id="url"
+          name="url"
+          type="url"
+          placeholder="https://www.youtube.com/watch?v=..."
+          required
+        />
+
+        <label for="bitrate">Quality</label>
+        <select id="bitrate" name="bitrate">
+          <option value="96">96 kbps</option>
+          <option value="128">128 kbps</option>
+          <option value="192" selected>192 kbps (recommended)</option>
+          <option value="256">256 kbps</option>
+          <option value="320">320 kbps</option>
+        </select>
+
+        <div class="actions">
+          <button type="submit" id="submit">Convert</button>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </form>
+
+      <section id="preview" class="card preview hidden">
+        <img id="thumb" alt="" />
+        <div class="meta">
+          <h2 id="title"></h2>
+          <p id="author"></p>
+          <p id="duration"></p>
+        </div>
+      </section>
+
+      <footer>
+        <p>
+          For personal use only. Respect YouTube's Terms of Service and
+          copyright law &mdash; only download content you own or have
+          permission to use.
+        </p>
+      </footer>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

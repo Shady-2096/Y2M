@@ -1,0 +1,20 @@
+{
+  "name": "y2m",
+  "version": "1.0.0",
+  "description": "YouTube to MP3 converter",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@distube/ytdl-core": "^4.16.0",
+    "express": "^4.21.1",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.3"
+  }
+}
